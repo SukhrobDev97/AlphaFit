@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-console.log('PORT', process.env.PORT);
-console.log('URL:', process.env.MONGO_URL)
-
-
 import mongoose from 'mongoose';
+import app from './app';
+
 
 mongoose.connect(process.env.MONGO_URL as string, {})
     .then((data) => {

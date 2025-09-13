@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { T } from "../libs/types/common";
-import MemberService from "../models/Member.service"
+import MemberService from '../models/Member.service';
 import { AdminRequest, MemberInput } from '../libs/types/member';
 import { MemberType } from '../libs/enums/member.enum';
 import { LoginInput } from '../libs/types/member';
 import Errors, { HttpCode, Message } from '../libs/Errors';
-
+import fetch from "node-fetch"
+import { config } from 'dotenv/lib/main';
 const memberService = new MemberService()
 const storeController: T = {};
 storeController.goHome = (req: Request, res: Response) => {
     try {
         console.log("goHome")
-
-        res.render('home')
+        res.render('Home')
     }
     catch (err) {
         console.log('Error, gohome', err)
@@ -23,8 +23,7 @@ storeController.goHome = (req: Request, res: Response) => {
 storeController.getLogin = (req: Request, res: Response) => {
     try {
         console.log("getLogin")
-
-        res.render('login')
+        res.render('Login')
     }
     catch (err) {
         console.log('Error, login', err)
@@ -35,76 +34,97 @@ storeController.getLogin = (req: Request, res: Response) => {
 storeController.getSignup = (req: Request, res: Response) => {
     try {
         console.log("getSignUp")
-
-        res.render('signup')
+        res.render('Signup')
     }
     catch (err) {
         console.log('Error, signup', err)
         res.redirect("/admin")
     }
-}
 
+}
 
 storeController.processSignup = async (req: AdminRequest, res: Response) => {
     try {
-        console.log("processSignup")
-        console.log('body:', req.body)
-        const file = req.file;
-        if(!file)
-            throw new Errors(HttpCode.BAD_REQUEST,Message.SOMETHING_WENT_WRONG);
+        console.log("processSignup");
 
-        const newMember: MemberInput = req.body as unknown as MemberInput;
+        // CAPTCHA tokenni olish
+        const recaptchaToken = (req.body as any)?.['g-recaptcha-response'];
+        const secret = process.env.RECAPTCHA_SECRET_KEY;
+        console.log("SECRET KEY:", process.env.RECAPTCHA_SECRET_KEY)
+        if (!recaptchaToken) {
+            return res.send(`<script>alert("Iltimos, CAPTCHAni tasdiqlang");window.location.replace("/admin/signup")</script>`);
+        }
+
+        // Google API orqali tekshirish
+       
+        const response = await fetch(
+            `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`,
+            { method: "POST" }
+        );
+        const data = await response.json();
+        if (!data.success) {
+            return res.send(`<script>alert("CAPTCHA tasdiqlanmadi");window.location.replace("/admin/signup")</script>`);
+        }
+
+        // Faylni tekshirish
+        const file = req.file;
+        if (!file)
+            throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
+
+        const newMember: MemberInput = req.body as unknown as MemberInput
         newMember.memberType = MemberType.STORE
 
-        const memberService = new MemberService();
         const result = await memberService.processSignup(newMember);
         req.session.member = result;
-        req.session.save(function(){
+        req.session.save(function () {
             res.redirect("/admin/product/all");
         })
-    }
-    catch (err) {
+
+    } catch (err) {
         console.log('Error, processSignup', err)
-        const message = err instanceof Errors? err.message: Message.SOMETHING_WENT_WRONG;
-        res.send(`<script>alert("${message}");window.location.replace("admin/signup")</script>`)
+        const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+        res.send(`<script>alert("${message}");window.location.replace("/admin/signup")</script>`)
     }
 }
+
+
 
 storeController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processLogin");
         console.log("body:", req.body);
-        const input: LoginInput = req.body as unknown as LoginInput;
+        const input: LoginInput = req.body as unknown as LoginInput
 
         const memberService = new MemberService();
         const result = await memberService.processLogin(input)
 
+        //session authentication;
+
         req.session.member = result;
-        req.session.save(function(){
+        req.session.save(function () {
             res.redirect("/admin/product/all");
         })
     }
     catch (err) {
         console.log('Error, processLogin', err)
-        const message = err instanceof Errors? err.message: Message.SOMETHING_WENT_WRONG;
-        res.send(`<script>alert("${message}");window.location.replace("admin/signup")</script>`)
+        const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+        res.send(`<script>alert("${message}");window.location.replace("/admin/login")</script>`)
     }
-}
+};
 
 
 storeController.logout = async (req: AdminRequest, res: Response) => {
     try {
         console.log("logout");
-       req.session.destroy(function(){
-        res.redirect("/admin");
-       })
+        req.session.destroy(function () {
+            res.redirect("/admin");
+        })
     }
     catch (err) {
         console.log('Error, logout', err)
-        res.render("/admin")
+        res.render("/admin/login")
     }
-}
-
+};
 
 storeController.getUsers = async (req: Request, res: Response) => {
     try {
@@ -134,27 +154,31 @@ storeController.updateChosenUser = async (req: Request, res: Response) => {
 };
 
 
-storeController.checkAuthSession = async (req:AdminRequest, res: Response) =>{
-    try{
+
+storeController.checkAuthSession = async (req: AdminRequest, res: Response) => {
+    try {
         console.log("checkAuthSession");
-        if(req.session?.member)
+        if (req.session?.member)
             res.send(`<script>alert("${req.session.member.memberNick}")</script>`);
         else res.send(`<script>alert("${Message.NOT_AUTHENTICATED}")</script>`)
-    }catch (err) {
+    } catch (err) {
         console.log('Error,checkAuthSession ', err)
         res.send(err)
     }
-}
+};
 
-storeController.verifyStore = (req:AdminRequest, res: Response, next: NextFunction) =>{
-    if(req.session?.member?.memberType === MemberType.STORE){
-     req.member = req.session.member;
-     next()
-    }else{
-     const message = Message.NOT_AUTHENTICATED
-     res.send(`<script>alert("${message}");window.location.replace('/admin/login);</script>`)
+storeController.verifyStore = (req: AdminRequest, res: Response, next: NextFunction) => {
+    if (req.session?.member?.memberType === MemberType.STORE) {
+        req.member = req.session.member;
+        next()
+    } else {
+        const message = Message.NOT_AUTHENTICATED
+        res.send(`<script>alert("${message}");window.location.replace('/admin/login');</script>`)
     }
 }
+
+
+
 
 export default storeController;
 

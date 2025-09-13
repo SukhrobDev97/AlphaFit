@@ -29,7 +29,7 @@
       <div class="board">
         <div class="dishes-table">
           <span class="new-dish-txt" style="margin-bottom: 30px">
-            RESTAURANT MENU
+            STORE MENU
           </span>
           <table class="table table-bordered table-hover">
             <thead class="thead-light">
@@ -44,21 +44,24 @@
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
-            <tbody style="background: white">
-              <td>1</td>
-              <td>Steak</td>
-              <td>Dish</td>
-              <td>NORMAL</td>
-              <td>11</td>
-              <td>100</td>
-              <td>
-                <select class="spec-select new-product-status">
-                  <option value="PAUSE" selected>PAUSE</option>
-                  <option value="PROCESS">PROCESS</option>
-                  <option value="DELETE">DELETE</option>
-                </select>
-              </td>
-            </tbody>
+
+            <% products.map(function(value, key){ %>
+              <tbody style="background: white">
+                <td><%= key + 1 %></td>
+                <td><%= value.productName %></td>
+                <td><%= value.productCollection %></td>
+                <td><%= value.productname === "DRINK" ? value.productVolume : value.productSize %></td>
+                <td><%= value.productPrice %></td>
+                <td><%= value.productLeftCount %></td>           
+                <td>
+                  <select class="spec-select new-product-status" id = "<%= value._id %>">
+                    <option value="PAUSE" <%=value.productStatus === "PAUSE" ? 'selected' : ''  %> > PAUSE</option>
+                    <option value="PROCESS" <%=value.productStatus === "PROCESS" ? 'selected' : ''  %> >PROCESS</option>
+                    <option value="DELETE" <%=value.productStatus === "DELETE" ? 'selected' : ''  %> >DELETE</option>
+                  </select>
+                </td>
+              </tbody>
+            <% }) %>
             <!--  LOOP PRODUCTS: END  -->
           </table>
           <div

@@ -1,33 +1,33 @@
 import express from 'express';
 const routerAdmin = express.Router();
-import restaurantController from './controllers/restaurant.controller';
+import storeController from './controllers/store.controller';
 import productController from './controllers/product.controller';
 import makeUploader from './libs/utils/uploader';
 
 
 
-// RESTAURANT
-routerAdmin.get('/', restaurantController.goHome);
+// STORE
+routerAdmin.get('/', storeController.goHome);
 
 routerAdmin
-.get('/login', restaurantController.getLogin)
-.post('/login', restaurantController.processLogin);
+.get('/login', storeController.getLogin)
+.post('/login', storeController.processLogin);
 
 routerAdmin
-.get('/signup', restaurantController.getSignup)
-.post('/signup',makeUploader("members").single("memberImage"), restaurantController.processSignup)
-.post('/signup', restaurantController.processSignup);
+.get('/signup', storeController.getSignup)
+.post('/signup',makeUploader("members").single("memberImage"), storeController.processSignup)
+.post('/signup', storeController.processSignup);
 
-routerAdmin.get("/logout", restaurantController.logout);
-routerAdmin.get("/check-me", restaurantController.checkAuthSession);
+routerAdmin.get("/logout", storeController.logout);
+routerAdmin.get("/check-me", storeController.checkAuthSession);
 
 // product
 
 routerAdmin.get("/product/all", 
-    restaurantController.verifyRestaurant,
+    storeController.verifyStore,
     productController.getAllProducts);
 routerAdmin.post("/product/create", 
-    restaurantController.verifyRestaurant,
+    storeController.verifyStore,
     makeUploader("products").array("productImages", 2),
     productController.createNewProduct);
 routerAdmin.post("/product/:id", productController.updateNewProduct);

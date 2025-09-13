@@ -4,10 +4,10 @@ import MemberService from "../models/Member.service"
 import { AdminRequest, MemberInput } from '../libs/types/member';
 import { MemberType } from '../libs/enums/member.enum';
 import { LoginInput } from '../libs/types/member';
-import Errors, { Message } from '../libs/Errors';
+import Errors, { HttpCode, Message } from '../libs/Errors';
 
-const restaurantController: T = {};
-restaurantController.goHome = (req: Request, res: Response) => {
+const storeController: T = {};
+storeController.goHome = (req: Request, res: Response) => {
     try {
         console.log("goHome")
 
@@ -19,7 +19,7 @@ restaurantController.goHome = (req: Request, res: Response) => {
     }
 };
 
-restaurantController.getLogin = (req: Request, res: Response) => {
+storeController.getLogin = (req: Request, res: Response) => {
     try {
         console.log("getLogin")
 
@@ -31,7 +31,7 @@ restaurantController.getLogin = (req: Request, res: Response) => {
     }
 };
 
-restaurantController.getSignup = (req: Request, res: Response) => {
+storeController.getSignup = (req: Request, res: Response) => {
     try {
         console.log("getSignUp")
 
@@ -44,19 +44,22 @@ restaurantController.getSignup = (req: Request, res: Response) => {
 }
 
 
-restaurantController.processSignup = async (req: AdminRequest, res: Response) => {
+storeController.processSignup = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processSignup")
         console.log('body:', req.body)
+        const file = req.file;
+        if(!file)
+            throw new Errors(HttpCode.BAD_REQUEST,Message.SOMETHING_WENT_WRONG);
 
         const newMember: MemberInput = req.body as unknown as MemberInput;
-        newMember.memberType = MemberType.RESTAURANT
+        newMember.memberType = MemberType.STORE
 
         const memberService = new MemberService();
         const result = await memberService.processSignup(newMember);
         req.session.member = result;
         req.session.save(function(){
-            res.send(result);
+            res.redirect("/admin/product/all");
         })
     }
     catch (err) {
@@ -66,7 +69,7 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
     }
 }
 
-restaurantController.processLogin = async (req: AdminRequest, res: Response) => {
+storeController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processLogin");
         console.log("body:", req.body);
@@ -77,7 +80,7 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
 
         req.session.member = result;
         req.session.save(function(){
-            res.send(result);
+            res.redirect("/admin/product/all");
         })
     }
     catch (err) {
@@ -88,7 +91,7 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
 }
 
 
-restaurantController.logout = async (req: AdminRequest, res: Response) => {
+storeController.logout = async (req: AdminRequest, res: Response) => {
     try {
         console.log("logout");
        req.session.destroy(function(){
@@ -101,7 +104,7 @@ restaurantController.logout = async (req: AdminRequest, res: Response) => {
     }
 }
 
-restaurantController.checkAuthSession = async (req:AdminRequest, res: Response) =>{
+storeController.checkAuthSession = async (req:AdminRequest, res: Response) =>{
     try{
         console.log("checkAuthSession");
         if(req.session?.member)
@@ -113,8 +116,8 @@ restaurantController.checkAuthSession = async (req:AdminRequest, res: Response) 
     }
 }
 
-restaurantController.verifyRestaurant = (req:AdminRequest, res: Response, next: NextFunction) =>{
-    if(req.session?.member?.memberType === MemberType.RESTAURANT){
+storeController.verifyStore = (req:AdminRequest, res: Response, next: NextFunction) =>{
+    if(req.session?.member?.memberType === MemberType.STORE){
      req.member = req.session.member;
      next()
     }else{
@@ -123,6 +126,6 @@ restaurantController.verifyRestaurant = (req:AdminRequest, res: Response, next: 
     }
 }
 
-export default restaurantController;
+export default storeController;
 
 

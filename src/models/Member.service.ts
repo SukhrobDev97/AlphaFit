@@ -53,7 +53,7 @@ class MemberService {
     //BSSR 
     public async processSignup(input: MemberInput): Promise<Member> {
         const exist = await this.memberModel
-            .findOne({ memberType: MemberType.RESTAURANT })
+            .findOne({ memberType: MemberType.STORE })
             .exec();
         console.log("exist:", exist)
         if (exist) throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED)
@@ -85,7 +85,7 @@ class MemberService {
 
 
         if(!isMatch){throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PASSWORD)}
-            
+
         return await this.memberModel.findById(member._id).exec();
     }
     

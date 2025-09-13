@@ -30,7 +30,7 @@ routerAdmin.post("/product/create",
     storeController.verifyStore,
     makeUploader("products").array("productImages", 2),
     productController.createNewProduct);
-routerAdmin.post("/product/:id", productController.updateNewProduct);
+routerAdmin.post("/product/:id",storeController.verifyRestaurant, productController.updateNewProduct);
 
 
 export default routerAdmin

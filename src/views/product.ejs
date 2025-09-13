@@ -1,6 +1,12 @@
 <%- include('includes/header') %>
 <body>
     <div>product</div>
+    <div><%=member.memberNick%></div>
+
+    <% products.map((value,key) =>{ %>
+    <p> <%= value.productName %></p>
+    <p> <%= value.productSize %></p>
+    <% } )%>
 </body>
 </html>
 

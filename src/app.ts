@@ -11,8 +11,11 @@ import ConnectMongoDb from "connect-mongodb-session";
 const MongoDBStore = ConnectMongoDb(session);
 const store = new MongoDBStore({
     uri:String(process.env.MONGO_URL),
-    collection: "sessions"
+    collection: "sessions",
 })
+store.on('error', function(error) {
+    console.error('SESSION STORE ERROR:', error);
+  });
 
 //1 -- ENTERANCE --;
 const app = express();

@@ -7,6 +7,7 @@ import { MORGAN_FORMAT } from './libs/config';
 
 import session from 'express-session';
 import ConnectMongoDb from "connect-mongodb-session";
+import { T } from './libs/types/common';
 
 const MongoDBStore = ConnectMongoDb(session);
 const store = new MongoDBStore({
@@ -38,6 +39,11 @@ app.use(
     })
 );
 
+app.use(function(req,res,next){
+    const sessionINstance = req.session as T;
+    res.locals.member = sessionINstance.member;
+    next();
+})
 // 3- views
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs")

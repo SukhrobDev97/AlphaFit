@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { T } from "../libs/types/common";
 import MemberService from "../models/Member.service"
 import { AdminRequest, MemberInput } from '../libs/types/member';
@@ -11,7 +11,7 @@ restaurantController.goHome = (req: Request, res: Response) => {
     try {
         console.log("goHome")
 
-        res.render('Home page')
+        res.render('home')
     }
     catch (err) {
         console.log('Error, gohome', err)
@@ -23,7 +23,7 @@ restaurantController.getLogin = (req: Request, res: Response) => {
     try {
         console.log("getLogin")
 
-        res.render('Login page')
+        res.render('login')
     }
     catch (err) {
         console.log('Error, login', err)
@@ -35,7 +35,7 @@ restaurantController.getSignup = (req: Request, res: Response) => {
     try {
         console.log("getSignUp")
 
-        res.render('Signup page')
+        res.render('signup')
     }
     catch (err) {
         console.log('Error, signup', err)
@@ -113,6 +113,15 @@ restaurantController.checkAuthSession = async (req:AdminRequest, res: Response) 
     }
 }
 
+restaurantController.verifyRestaurant = (req:AdminRequest, res: Response, next: NextFunction) =>{
+    if(req.session?.member?.memberType === MemberType.RESTAURANT){
+     req.member = req.session.member;
+     next()
+    }else{
+     const message = Message.NOT_AUTHENTICATED
+     res.send(`<script>alert("${message}");window.location.replace('/admin/login);</script>`)
+    }
+}
 
 export default restaurantController;
 

@@ -69,7 +69,7 @@
     height: auto;
   
     /* TODO: UNCOMMENT */
-    /*display: none;*/
+    display: none;
     flex-direction: column;
     align-items: center;
   }

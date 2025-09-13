@@ -31,7 +31,13 @@ routerAdmin.post("/product/create",
     makeUploader("products").array("productImages", 2),
     productController.createNewProduct);
 routerAdmin.post("/product/:id",storeController.verifyStore, productController.updateNewProduct);
-routerAdmin.get('/users/all', storeController.verifyRestaurant, storeController.getUsers)
+routerAdmin.get('/user/all', storeController.verifyRestaurant, storeController.getUsers)
 
+
+routerAdmin.post(
+    "/user/edit",
+    storeController.verifyStore,
+    storeController.updateChosenUser
+)
 
 export default routerAdmin

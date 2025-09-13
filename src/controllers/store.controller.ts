@@ -119,12 +119,17 @@ storeController.getUsers = async (req: Request, res: Response) => {
     }
 };
 
-storeController.updateChosenUser = (req: Request, res: Response) => {
+storeController.updateChosenUser = async (req: Request, res: Response) => {
     try {
         console.log("updateChosenUser")
+        const result = await memberService.updateChosenUser(req.body);
+        res.status(HttpCode.OK).json({ data: result })
     }
     catch (err) {
         console.log('Error, updateChosenUser', err)
+        console.log('Error, signup', err);
+        if (err instanceof Errors) res.status(err.code).json(err);
+        else res.status(Errors.standard.code).json(Errors.standard)
     }
 };
 

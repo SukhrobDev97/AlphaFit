@@ -24,6 +24,11 @@ productController.getAllProducts = async (req: Request, res: Response) => {
 productController.createNewProduct = async (req: Request, res: Response) => {
     try {
         console.log("createNewProduct") 
+        if (!req.file) {
+            return res.status(400).send("No file uploaded");
+          }
+      
+          console.log("Uploaded file:", req.file);
     }
     catch (err) {
         console.log('Error, createNewProduct', err);

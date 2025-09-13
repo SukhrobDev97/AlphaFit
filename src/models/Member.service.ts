@@ -12,20 +12,8 @@ class MemberService {
     }
 
     //SPA
+    
     public async signup(input: MemberInput): Promise<Member> {
-        console.log("KELGAN INPUT:", input);
-      
-        // 1. Nickname va phone borligini tekshirish
-        const existing = await this.memberModel.findOne({
-          $or: [
-            { memberNick: input.memberNick },
-            { memberPhone: input.memberPhone }
-          ]
-        }).exec();
-      
-        if (existing) {
-          throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE);
-        }
 
         const salt = await bcrypt.genSalt();
         input.memberPassword = await bcrypt.hash(input.memberPassword,salt);
@@ -36,9 +24,10 @@ class MemberService {
             return result.toJSON();
         } catch (err) {
             console.error("ERROR, model:signup", err)
-            throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED)
+            throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE)
         }
     }
+
 
     public async login(input:LoginInput): Promise<Member>{
         const member = await this.memberModel

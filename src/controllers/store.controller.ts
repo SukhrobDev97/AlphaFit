@@ -6,6 +6,7 @@ import { MemberType } from '../libs/enums/member.enum';
 import { LoginInput } from '../libs/types/member';
 import Errors, { HttpCode, Message } from '../libs/Errors';
 
+const memberService = new MemberService()
 const storeController: T = {};
 storeController.goHome = (req: Request, res: Response) => {
     try {
@@ -103,6 +104,30 @@ storeController.logout = async (req: AdminRequest, res: Response) => {
         res.render("/admin")
     }
 }
+
+
+storeController.getUsers = async (req: Request, res: Response) => {
+    try {
+        console.log("getUSers");
+        const result = await memberService.getUsers();
+
+        res.render('users', { users: result })
+    }
+    catch (err) {
+        console.log('Error, getUsers', err)
+        res.redirect("/admin")
+    }
+};
+
+storeController.updateChosenUser = (req: Request, res: Response) => {
+    try {
+        console.log("updateChosenUser")
+    }
+    catch (err) {
+        console.log('Error, updateChosenUser', err)
+    }
+};
+
 
 storeController.checkAuthSession = async (req:AdminRequest, res: Response) =>{
     try{

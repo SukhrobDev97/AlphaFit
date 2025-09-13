@@ -5,7 +5,8 @@ import { MemberStatus, MemberType } from "../libs/enums/member.enum";
 const memberSchema = new Schema({
     memberType: {
         type: String,
-        enum: MemberType,
+        // enum: MemberType,
+        enum: Object.values(MemberType),
         default: MemberType.USER
     },
 

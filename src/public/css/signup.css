@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #f3efef;
+    background: linear-gradient(135deg, #2b0a0a, #b12525);
     
     background-size: 200% 200%;
   }
@@ -23,7 +23,9 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    background: #ffffff;
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 25px;
   }
   

@@ -14,6 +14,7 @@ $(function () {
 
             if (!validImageType.includes(fileType)) {
                 alert("Please insert only jpeg, jpg and png!");
+                $(this).val("");
             } else {
                 if (uploadFile) {
                     console.log(URL.createObjectURL(uploadFile));
@@ -34,7 +35,7 @@ function validateSignupForm() {
     const memberNick = $('.member-nick').val();
     const memberPhone = $('.member-phone').val();
     const memberPassword = $('.member-password').val();
-    const confirmPassword = $('.member-password').val();
+    const confirmPassword = $('.confirm-password').val();
 
     if (
         memberNick === '' ||
@@ -50,4 +51,5 @@ function validateSignupForm() {
         alert('Passwords do not match. Please try again.')
         return false;
     }
+    return true;
 }

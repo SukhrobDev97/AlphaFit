@@ -6,7 +6,7 @@
 
 <body>
   <div class="signup-container">
-    <form action="/admin/signup" method="POST" enctype="multipart/form-data">
+    <form onsubmit="return validateSignupForm()" action="/admin/signup" method="POST" enctype="multipart/form-data">
       <div class="signup-frame" style="width: 650px">
         <div class="signup-top">
           <span>Signup</span>
@@ -24,14 +24,14 @@
           </div>
           <div class="sign-up-frame">
             <label>Phone *</label>
-            <input type="text" name="memberPhone" class="member-phone" placeholder="Phone" value="" />
+            <input type="text" name="memberPhone" class="member-phone" placeholder="Phone" value="" autocomplete="off" />
           </div>
         </div>
 
         <div class="sign-input-frame" style="justify-content: space-between">
           <div class="sign-up-frame">
             <label>Password *</label>
-            <input type="password" name="memberPassword" class="member-password" placeholder="Password" value="" />
+            <input type="password" name="memberPassword" class="member-password" placeholder="Password" value="" autocomplete="new-password" />
           </div>
           <div class="sign-up-frame">
             <label>Repeat password *</label>
@@ -41,7 +41,7 @@
 
         <div class="signup-input-frame">
           <div class="media-frame">
-            <img class="upload-img-frame" src="/img/AlphaFit_Logo-2.gif" />
+            <img class="upload-img-frame" src="/img/running.jpeg" />
             <div class="upload-container">
               <span class="media-text">Product image</span>
               <div class="file-box bs3-primary preview-image" style="margin-top: 25px; display: flex">

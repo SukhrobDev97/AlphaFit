@@ -63,7 +63,7 @@ storeController.processSignup = async (req: AdminRequest, res: Response) => {
         );
         const data = await response.json();
         if (!data.success) {
-            return res.send(`<script>alert("CAPTCHA tasdiqlanmadi");window.location.replace("/admin/signup")</script>`);
+            return res.send(`<script>alert("CAPTCHA is not proceeded");window.location.replace("/admin/signup")</script>`);
         }
 
         // Faylni tekshirish

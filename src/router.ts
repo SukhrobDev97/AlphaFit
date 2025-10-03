@@ -2,7 +2,10 @@ import express from 'express';
 const router = express.Router();
 import memberController from './controllers/member.controller';
 import uploader from './libs/utils/uploader';
+import productController from './controllers/product.controller';
 
+
+/* Member */
 router.get('/member/restaurant', memberController.getRestaurant)
 router.post('/member/login', memberController.login)
 router.post('/member/signup', memberController.signup)
@@ -18,6 +21,10 @@ router.post(
 )
 
 router.get('/member/top-users',memberController.getTopUsers)
+
+/* PRODUCTS */
+
+router.get("/product/all", productController.getProducts)
 
 
 export default router

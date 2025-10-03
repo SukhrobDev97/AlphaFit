@@ -7,7 +7,12 @@ import { LoginInput } from '../libs/types/member';
 import Errors, { HttpCode, Message } from '../libs/Errors';
 import fetch from "node-fetch"
 import { config } from 'dotenv/lib/main';
+import DashboardService from "../models/Dashboard.service";
+
+
 const memberService = new MemberService()
+const dashboardService = new DashboardService(); // 👈 instance yaratish kerak
+
 const storeController: T = {};
 storeController.goHome = (req: Request, res: Response) => {
     try {
@@ -110,6 +115,25 @@ storeController.processLogin = async (req: AdminRequest, res: Response) => {
         const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
         res.send(`<script>alert("${message}");window.location.replace("/admin/login")</script>`)
     }
+};
+
+//DASHBOARD
+
+ storeController.getMonthlySales = async (req: Request, res: Response) => {
+  try {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+
+    const sales = await dashboardService.getMonthlySales(year, month);
+    
+    res.render("chart", {
+      title: "Dashboard",
+      sales
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 };
 
 

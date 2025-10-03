@@ -34,6 +34,10 @@ routerAdmin.post("/product/:id",storeController.verifyStore, productController.u
 routerAdmin.get('/user/all', storeController.verifyStore, storeController.getUsers)
 
 
+routerAdmin.get('/dashboard', storeController.verifyStore, storeController.getMonthlySales);
+
+  
+
 routerAdmin.post(
     "/user/edit",
     storeController.verifyStore,

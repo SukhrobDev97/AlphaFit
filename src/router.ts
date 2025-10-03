@@ -6,7 +6,7 @@ import productController from './controllers/product.controller';
 
 
 /* Member */
-router.get('/member/restaurant', memberController.getRestaurant)
+router.get('/member/store', memberController.getRestaurant)
 router.post('/member/login', memberController.login)
 router.post('/member/signup', memberController.signup)
 router.post('/member/logout', memberController.verifyAuth, memberController.logout)
@@ -25,6 +25,7 @@ router.get('/member/top-users',memberController.getTopUsers)
 /* PRODUCTS */
 
 router.get("/product/all", productController.getProducts)
+// router.get("/product/:id", memberController.retrieveAuth, productController.getProduct)
 
 
 export default router

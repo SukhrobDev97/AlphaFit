@@ -21,7 +21,9 @@ store.on('error', function(error) {
 
 //1 -- ENTERANCE --;
 const app = express();
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(process.cwd(), "src/public")));
+console.log("STATIC PATH:", path.join(process.cwd(), "src/public"));
+
 app.use ("/uploads", express.static("./uploads"))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())

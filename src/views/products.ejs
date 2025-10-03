@@ -29,7 +29,7 @@
       <div class="board">
         <div class="dishes-table">
           <span class="new-dish-txt" style="margin-bottom: 30px">
-            STORE MENU
+            RESTAURANT MENU
           </span>
           <table class="table table-bordered table-hover">
             <thead class="thead-light">
@@ -44,7 +44,6 @@
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
-
             <% products.map(function(value, key){ %>
               <tbody style="background: white">
                 <td><%= key + 1 %></td>
@@ -74,7 +73,7 @@
           </div>
         </div>
         <form
-          onsubmit="return validateForm()"
+        onsubmit="return validateForm()"
           action="/admin/product/create"
           method="POST"
           class="dish-container"
@@ -227,7 +226,7 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="/js/products.js"></script>
+  <script type="text/javascript" src="/js/product.js"></script>
 </body>
 
 <%- include('includes/footer') %>

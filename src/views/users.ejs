@@ -61,18 +61,20 @@
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
+          <% users.map(function(value, index){ %>
             <tbody style="background: white">
-              <td>1</td>
-              <td>David</td>
-              <td>821024697878</td>
+              <td><%= index +1 %></td>
+              <td><%= value.memberNick %></td>
+              <td><%= value.memberPhone %></td>
               <td style="width: 13%">
-                <select class="spec-select member-status">
-                  <option value="ACTIVE" selected>ACTIVE</option>
-                  <option value="BLOCK">BLOCK</option>
-                  <option value="DELETE">DELETE</option>
+                <select class="spec-select member-status" id="<%= value._id %>">
+                  <option value="ACTIVE" <%= value.memberStatus === "ACTIVE" ? 'selected': '' %> >ACTIVE</option>
+                  <option value="BLOCK" <%= value.memberStatus === "BLOCK" ? 'selected': '' %>>BLOCK</option>
+                  <option value="DELETE" <%= value.memberStatus === "DELETE" ? 'selected': '' %>>DELETE</option>
                 </select>
               </td>
             </tbody>
+          <%  }) %>
             <!--  LOOP PRODUCTS: END  -->
           </table>
         </div>

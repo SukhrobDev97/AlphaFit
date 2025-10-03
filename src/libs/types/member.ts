@@ -48,9 +48,13 @@ export interface LoginInput{
 }
 
 export interface ExtentedRequest extends Request {
+    
     member: Member;
     file: Express.Multer.File;
     files: Express.Multer.File[];
+    cookies: {
+        [key: string]: string;
+      };
 }
 
 

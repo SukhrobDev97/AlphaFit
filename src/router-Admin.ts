@@ -28,7 +28,7 @@ routerAdmin.get("/product/all",
     productController.getAllProducts);
 routerAdmin.post("/product/create", 
     storeController.verifyStore,
-    makeUploader("products").array("productImages", 2),
+    makeUploader("products").array("productImages", 5),
     productController.createNewProduct);
 routerAdmin.post("/product/:id",storeController.verifyStore, productController.updateNewProduct);
 routerAdmin.get('/user/all', storeController.verifyStore, storeController.getUsers)

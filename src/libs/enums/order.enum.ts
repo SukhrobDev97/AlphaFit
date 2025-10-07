@@ -1,6 +1,6 @@
-export enum OrderStatus {
-    PENDING = "PENDING",
-    PAID = "PAID",
-    CANCELLED = "CANCELLED",
-  }
-  
+export enum OrderStatus{
+  PAUSE = "PAUSE",
+  PROCESS = "PROCESS",
+  FINISH = "FINISH",
+  DELETE = "DELETE"
+}

@@ -1,28 +1,30 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, {Schema} from "mongoose";
 import { OrderStatus } from "../libs/enums/order.enum";
 
+const orderSchema  = new Schema({
+    orderTotal: {
+        type: Number,
+        required: true
+    },
 
-const orderSchema = new Schema(
-  {
-    orderUser: {
-      type: Schema.Types.ObjectId,
-      ref: "Member",
-      required: true,
+    orderDelivery: {
+        type: Number,
+        required: true,
     },
-    orderTotalPrice: {
-      type: Number,
-      required: true,
-    },
+
     orderStatus: {
-      type: String,
-      enum: Object.values(OrderStatus),
-      default: OrderStatus.PENDING,
+        type: String,
+        enum: OrderStatus,
+        default: OrderStatus.PAUSE
     },
-    orderNote: {
-      type: String,
+    
+    memberId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Member"
     },
-  },
-  { timestamps: true }
-);
+},
+{timestamps: true}
+)
 
-export const OrderModel = mongoose.model("Order", orderSchema);
+export default mongoose.model("Order", orderSchema)

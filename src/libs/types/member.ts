@@ -2,6 +2,9 @@ import { Session } from "express-session";
 import { MemberStatus, MemberType } from "../enums/member.enum";
 import { ObjectId } from 'mongoose'
 import mongoose from "mongoose";
+import { OrderItemInput } from "./order";
+import { Request } from 'express';
+
 
 export interface Member {
     _id: ObjectId;
@@ -50,6 +53,7 @@ export interface LoginInput{
 export interface ExtentedRequest extends Request {
     
     member: Member;
+    body: OrderItemInput[];
     file: Express.Multer.File;
     files: Express.Multer.File[];
     cookies: {

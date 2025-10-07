@@ -51,9 +51,7 @@ export interface LoginInput{
 }
 
 export interface ExtentedRequest extends Request {
-    
     member: Member;
-    body: OrderItemInput[];
     file: Express.Multer.File;
     files: Express.Multer.File[];
     cookies: {

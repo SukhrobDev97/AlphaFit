@@ -39,4 +39,10 @@ export interface OrderItemInput {
     itemPrice: number;
     productId: ObjectId;
     orderId?: ObjectId;
+    
+}
+
+export interface OrderUpdateInput {
+    orderId: string,
+    orderStatus: OrderStatus
 }

@@ -75,7 +75,7 @@ class OrderService {
         const result = await this.orderModel
             .aggregate([
                 { $match: matches },
-                { $sort: { updateAt: -1 } },
+                { $sort: { updatedAt: -1 } },
                 { $skip: (inquiry.page - 1) * inquiry.limit },
                 { $limit: inquiry.limit },
                 {
@@ -91,7 +91,7 @@ class OrderService {
                         from: "products",
                         localField: "orderItems.productId",
                         foreignField: "_id",
-                        as: "productId",
+                        as: "productData",
                     },
                 }
             ])

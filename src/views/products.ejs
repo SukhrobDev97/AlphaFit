@@ -13,6 +13,9 @@
           <a class="nav-link" href="/admin/product/all">Menu</a>
         </li>
         <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
           <a class="nav-link" href="/admin/user/all">Users</a>
         </li>
         <li
@@ -29,7 +32,7 @@
       <div class="board">
         <div class="dishes-table">
           <span class="new-dish-txt" style="margin-bottom: 30px">
-            RESTAURANT MENU
+            STORE MENU
           </span>
           <table class="table table-bordered table-hover">
             <thead class="thead-light">
@@ -49,7 +52,7 @@
                 <td><%= key + 1 %></td>
                 <td><%= value.productName %></td>
                 <td><%= value.productCollection %></td>
-                <td><%= value.productname === "DRINK" ? value.productVolume : value.productSize %></td>
+                <td><%= value.productname === "VITAMINS" ? value.productVolume : value.productSize %></td>
                 <td><%= value.productPrice %></td>
                 <td><%= value.productLeftCount %></td>           
                 <td>
@@ -124,9 +127,9 @@
               <label>Product Type</label>
               <select class="product-collection" name="productCollection">
                 <option value="DISH" selected>Dish</option>
-                <option value="SALAD">Salad</option>
+                <option value="SUPPLEMENT">Supplement</option>
                 <option value="DESSERT">Dessert</option>
-                <option value="DRINK">Drink</option>
+                <option value="VITAMINS">Vitamins</option>
                 <option value="OTHER">Other</option>
               </select>
             </div>
@@ -142,13 +145,9 @@
             </div>
 
             <div class="half-input" id="product-volume" style="display: none">
-              <label>Drink Volume</label>
+              <label>Vitamins Volume</label>
               <select class="product-volume" name="productVolume">
-                <option value="0.5">0,5 liters</option>
-                <option value="1" selected>1 liters</option>
-                <option value="1.2">1,2 liters</option>
-                <option value="1.5">1,5 liters</option>
-                <option value="2">2 liters</option>
+                 <option value="1" selected>pcs</option>     
               </select>
             </div>
           </div>

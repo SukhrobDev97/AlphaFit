@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(135deg, #000000, #E63946);
+  background: linear-gradient(135deg, #2b0a0a, #b12525);
 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
@@ -36,14 +36,14 @@ body {
   }
   
   h2 {
-    color:  #ea4242;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #efefee;
+    font-size: 40px;
+    font-family: monospace;
   }
 
   .back-home-btn {
     display: inline-block;
-    background: linear-gradient(135deg, #000000, #E63946);
+    background:  #E63946;
     color: #fff;
     font-weight: bold;
     font-size: 18px;
@@ -55,7 +55,7 @@ body {
   }
   
   .back-home-btn:hover {
-    background: linear-gradient(135deg, #E63946, #000000);
+    background:  #E63946;
     color: #c8b12e;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.4);

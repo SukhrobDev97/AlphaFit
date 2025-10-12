@@ -1,4 +1,5 @@
-import { OrderModel } from "../schema/Order.model";
+import { OrderStatus } from "../libs/enums/order.enum";
+import OrderModel  from "../schema/Order.model";
 
 class DashboardService{
     private readonly orderModel 
@@ -11,11 +12,10 @@ class DashboardService{
   const endDate = new Date(year, month, 0, 23, 59, 59);
 
   const stats = await OrderModel.aggregate([
-    { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
-    { $group: { _id: { $dayOfMonth: "$createdAt" }, total: { $sum: "$orderTotalPrice" } } },
+    { $match: { createdAt: { $gte: startDate, $lte: endDate }, orderStatus: OrderStatus.FINISH  } },
+    { $group: { _id: { $dayOfMonth: "$createdAt" }, total: { $sum: "$orderTotal" } } },
     { $sort: { _id: 1 } }
   ]);
-
   return stats;
     }
 }

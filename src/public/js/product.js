@@ -1,12 +1,11 @@
 console.log("Products frontend javascript file");
 
 
-// DRINK tanlansa — product-volume ko‘rinadi, aks holda product-collection
 $(function () {
     $('.product-collection').on('change', ()=> {
       const selectedValue = $(".product-collection").val();
   
-      if (selectedValue === 'DRINK') {
+      if (selectedValue === 'VITAMINS') {
         $('#product-collection').hide();
         $('#product-volume').show();
       } else {

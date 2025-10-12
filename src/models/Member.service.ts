@@ -73,14 +73,14 @@ class MemberService {
     ): Promise<Member>{
         const memberId = shapeIntoMongooseObjectId(member._id)
         const result = await this.memberModel
-        .findOneAndUpdate({_id: memberId, input}, {new:true})
+        .findOneAndUpdate({ _id: memberId }, input, { new: true })
         .exec()
         if(!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED)
         return result;
     }
 
 
-    public async getRestaurant(): Promise<Member>{
+    public async getStore(): Promise<Member>{
         const result = await this.memberModel
         .findOne({
             memberType: MemberType.STORE
@@ -96,7 +96,7 @@ class MemberService {
 
     public async getTopUsers(): Promise<Member[]>{
         const result = await this.memberModel
-        .findOne({
+        .find({
             memberStatus: MemberStatus.ACTIVE,
             memberPoints: {$gte : 1}
         })

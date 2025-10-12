@@ -7,11 +7,10 @@ import orderController from './controllers/order.controller';
 
 
 /* Member */
-router.get('/member/store', memberController.getRestaurant)
+router.get('/member/store', memberController.getStore)
 router.post('/member/login', memberController.login)
 router.post('/member/signup', memberController.signup)
 router.post('/member/logout', memberController.verifyAuth, memberController.logout)
-router.get('/member/detail', memberController.verifyAuth)
 router.get('/member/detail', memberController.verifyAuth, memberController.getMemberDetail)
 
 router.post(
@@ -26,13 +25,18 @@ router.get('/member/top-users',memberController.getTopUsers)
 /* PRODUCTS */
 
 router.get("/product/all", productController.getProducts)
-// router.get("/product/:id", memberController.retrieveAuth, productController.getProduct)
+router.get("/product/:id", memberController.retrieveAuth, productController.getProduct)
 
 
 /* ORDERS */
 router.post('/order/create', memberController.verifyAuth, orderController.createOrder)
 router.get('/order/all', memberController.verifyAuth, orderController.getMyOrders)
 router.post('/order/update', memberController.verifyAuth, orderController.updateOrder)
+
+// REVIEW
+router.post("/order/review", memberController.verifyAuth,orderController.createReview);
+
+router.get("/order/review/:orderItemId", memberController.verifyAuth,orderController.getReviewsByOrderItem);
 
 
 export default router

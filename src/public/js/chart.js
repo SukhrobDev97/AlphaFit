@@ -3,7 +3,7 @@ $(document).ready(function () {
   
     // X o‘qi: kunlar
     const labels = salesData.map(item => item._id);
-  
+    console.log("sss",window.salesData);
     // Y o‘qi: summalar
     const totals = salesData.map(item => item.total);
   

@@ -30,7 +30,7 @@ routerAdmin.post("/product/create",
     storeController.verifyStore,
     makeUploader("products").array("productImages", 5),
     productController.createNewProduct);
-routerAdmin.post("/product/:id",storeController.verifyStore, productController.updateNewProduct);
+routerAdmin.post("/product/:id",storeController.verifyStore, productController.updateChosenProduct);
 routerAdmin.get('/user/all', storeController.verifyStore, storeController.getUsers)
 
 

@@ -104,10 +104,10 @@ memberController.updateMember = async (req:Request<{}, {}, MemberUpdateInput> & 
 
 }
 
-memberController.getRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+memberController.getStore = async (req: Request, res: Response, next: NextFunction) => {
     try {
-       console.log("getRestaurant");
-       const result = await memberService.getRestaurant();
+       console.log("getStore");
+       const result = await memberService.getStore();
 
        res.status(HttpCode.OK).json(result)
     }

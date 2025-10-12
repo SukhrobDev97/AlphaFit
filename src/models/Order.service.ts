@@ -9,17 +9,20 @@ import {ObjectId} from "mongoose";
 import OrderItemModel from "../schema/OrderItem.model";
 import MemberService from "./Member.service";
 import { OrderStatus } from "../libs/enums/order.enum";
+import ReviewModel, { IReview } from "../schema/Review.model";
 
 
 class OrderService {
     private readonly orderModel;
     private readonly orderItemModel;
     private readonly memberService;
+    private readonly reviewModel
 
     constructor() {
         this.orderModel = OrderModel;
         this.orderItemModel = OrderItemModel;
         this.memberService = new MemberService()
+        this.reviewModel = ReviewModel
     }
 
     public async createOrder(
@@ -101,6 +104,41 @@ class OrderService {
     
         return result;
     }
+
+    // REVIEW
+
+    public async createReview(
+        memberId: string,
+        orderId: string,
+        orderItemId: string,
+        productId: string,
+        memberNick: string,
+        text: string
+      ): Promise<IReview> {
+        const review = new ReviewModel({
+          orderId,
+          orderItemId,
+          productId,
+          memberId: memberId,
+          memberNick,
+          text,
+        });
+        console.log("Saving review:", {
+            memberId,
+            orderId,
+            orderItemId,
+            productId,
+            memberNick,
+            text
+          });
+        return review.save();
+      }
+    
+      // OrderItem bo‘yicha review’larni olish
+      public async getReviewsByOrderItem(orderItemId: string): Promise<IReview[]> {
+        return ReviewModel.find({ orderItemId }).sort({ createdAt: -1 }).exec();
+      }
+    
     
     public async updateOrder(
         member: Member,

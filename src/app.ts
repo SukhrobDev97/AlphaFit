@@ -5,7 +5,7 @@ import router from './router';
 import routerAdmin from './router-Admin'
 import morgan from 'morgan'
 import { MORGAN_FORMAT } from './libs/config';
-
+import fs from "fs";
 import session from 'express-session';
 import ConnectMongoDb from "connect-mongodb-session";
 import { T } from './libs/types/common';
@@ -23,8 +23,9 @@ store.on('error', function(error) {
 //1 -- ENTERANCE --;
 const app = express();
 app.use(express.static(path.join(process.cwd(), "src/public")));
-console.log("STATIC PATH:", path.join(process.cwd(), "src/public"));
+
 app.use ("/uploads", express.static("./uploads"))
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({

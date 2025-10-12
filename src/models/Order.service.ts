@@ -106,7 +106,6 @@ class OrderService {
     }
 
     // REVIEW
-
     public async createReview(
         memberId: string,
         orderId: string,
@@ -115,29 +114,24 @@ class OrderService {
         memberNick: string,
         text: string
       ): Promise<IReview> {
+      
         const review = new ReviewModel({
-          orderId,
-          orderItemId,
-          productId,
-          memberId: memberId,
+          memberId: shapeIntoMongooseObjectId(memberId),
+          orderId: shapeIntoMongooseObjectId(orderId),
+          orderItemId: shapeIntoMongooseObjectId(orderItemId),
+          productId: shapeIntoMongooseObjectId(productId),
           memberNick,
           text,
         });
-        console.log("Saving review:", {
-            memberId,
-            orderId,
-            orderItemId,
-            productId,
-            memberNick,
-            text
-          });
+      
         return review.save();
       }
-    
-      // OrderItem bo‘yicha review’larni olish
-      public async getReviewsByOrderItem(orderItemId: string): Promise<IReview[]> {
-        return ReviewModel.find({ orderItemId }).sort({ createdAt: -1 }).exec();
-      }
+      
+      // Barcha review'larni olish service
+public async getAllReviews(): Promise<IReview[]> {
+    return ReviewModel.find().sort({ createdAt: -1 }).exec();
+  }
+  
     
     
     public async updateOrder(

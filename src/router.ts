@@ -34,9 +34,9 @@ router.get('/order/all', memberController.verifyAuth, orderController.getMyOrder
 router.post('/order/update', memberController.verifyAuth, orderController.updateOrder)
 
 // REVIEW
-router.post("/order/review", memberController.verifyAuth,orderController.createReview);
+router.post("/orders/review", memberController.verifyAuth,orderController.createReview);
 
-router.get("/order/review/:orderItemId", memberController.verifyAuth,orderController.getReviewsByOrderItem);
+router.get("/reviews", memberController.verifyAuth,orderController.getAllReviews);
 
 
 export default router

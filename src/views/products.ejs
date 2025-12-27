@@ -66,7 +66,7 @@
                   <td><%= value.productName %></td>
                   <td><%= value.productCollection %></td>
                   <td><%= value.productCollection === "VITAMINS" ? value.productVolume : value.productSize %></td>
-                  <td>₩<%= value.productPrice.toLocaleString() %></td>
+                  <td>$<%= value.productPrice.toLocaleString() %></td>
                   <td><%= value.productLeftCount %></td>
                   <td>
                     <select class="status-select new-product-status status-<%= value.productStatus.toLowerCase() %>" id="<%= value._id %>">

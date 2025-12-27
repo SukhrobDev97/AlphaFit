@@ -6,10 +6,10 @@
 const STATS_API_URL = '/admin/api/stats';
 
 /**
- * Format number with Korean Won currency
+ * Format number with US Dollar currency
  */
 function formatCurrency(amount) {
-  return `₩${amount.toLocaleString('ko-KR')}`;
+  return `$${amount.toLocaleString('en-US')}`;
 }
 
 /**

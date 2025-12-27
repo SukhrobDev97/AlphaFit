@@ -36,6 +36,9 @@ routerAdmin.get('/user/all', storeController.verifyStore, storeController.getUse
 
 routerAdmin.get('/dashboard', storeController.verifyStore, storeController.getMonthlySales);
 
+// API endpoints
+routerAdmin.get('/api/stats', storeController.verifyStore, storeController.getTodayStats);
+
   
 
 routerAdmin.post(

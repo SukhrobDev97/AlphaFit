@@ -1,9 +1,7 @@
 console.log("Signup frontend javascript file");
 
-
-
 $(function () {
-    const fileTarget = $(".file-box .upload-hidden");
+    const fileTarget = $("#input-file");
     let filename;
 
     fileTarget.on("change", function () {
@@ -18,24 +16,23 @@ $(function () {
             } else {
                 if (uploadFile) {
                     console.log(URL.createObjectURL(uploadFile));
-                    $(".upload-img-frame")
+                    $("#imagePreview")
                         .attr("src", URL.createObjectURL(uploadFile))
                         .addClass("success");
                 }
 
                 filename = $(this)[0].files[0].name;
-                $(this).siblings(".upload-name").val(filename);
+                $(this).siblings(".file-upload-name").val(filename);
             }
         }
     });
-
 });
 
 function validateSignupForm() {
-    const memberNick = $('.member-nick').val();
-    const memberPhone = $('.member-phone').val();
-    const memberPassword = $('.member-password').val();
-    const confirmPassword = $('.confirm-password').val();
+    const memberNick = $('#memberNick').val();
+    const memberPhone = $('#memberPhone').val();
+    const memberPassword = $('#memberPassword').val();
+    const confirmPassword = $('#confirmPassword').val();
 
     if (
         memberNick === '' ||
@@ -43,7 +40,7 @@ function validateSignupForm() {
         memberPassword === '' ||
         confirmPassword === ''
     ) {
-        alert('Plese insert all required fields');
+        alert('Please insert all required fields');
         return false;
     }
 

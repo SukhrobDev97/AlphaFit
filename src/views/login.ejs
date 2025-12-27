@@ -3,45 +3,52 @@
 <link rel="stylesheet" type="text/css" href="/css/login.css" />
 
 <body>
-  <form class="login-container" action="/admin/login" METHOD="POST" autocomplete="off">
-    <div class="login-frame">
-      <div class="login-top">
-        <span>Enter</span>
-        <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
-        <p>
-          Not registered yet?
-          <a href="/admin/signup" style="color: #6440fb">Signup</a>
-        </p>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 class="auth-title">Admin Login</h1>
+        <p class="auth-subtitle">Sign in to manage AlphaFit</p>
       </div>
-      <div class="login-input-frame">
-        <div class="login-input-container">
-          <label>Store *</label>
+
+      <form class="auth-form" action="/admin/login" method="POST" autocomplete="off">
+        <div class="form-group">
+          <label for="memberNick" class="form-label">Username</label>
           <input
             type="text"
+            id="memberNick"
             name="memberNick"
-            class="member-nick"
-            placeholder="Username"
+            class="form-input"
+            placeholder="Enter your username"
             value=""
             required
             autocomplete="off"
           />
         </div>
-        <div class="login-input-container">
-          <label>Password *</label>
+
+        <div class="form-group">
+          <label for="memberPassword" class="form-label">Password</label>
           <input
             type="password"
+            id="memberPassword"
             name="memberPassword"
-            class="member-password"
-            placeholder="Password"
+            class="form-input"
+            placeholder="Enter your password"
             value=""
             required
             autocomplete="new-password"
           />
         </div>
+
+        <button type="submit" class="auth-button auth-button-primary">Login</button>
+      </form>
+
+      <div class="auth-footer">
+        <a href="/admin" class="auth-link">Back to Home</a>
+        <span class="auth-divider">•</span>
+        <a href="/admin/signup" class="auth-link">Not registered? Sign up</a>
       </div>
-      <button class="login-btn btn" name="login" type="submit">Login</button>
     </div>
-  </form>
+  </div>
 </body>
 
 <%- include('includes/footer') %>

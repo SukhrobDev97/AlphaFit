@@ -1,0 +1,31 @@
+<div class="activity-section">
+  <h2 class="section-title">Today Activity</h2>
+  
+  <div class="activity-card">
+    <% if (!activity || activity.length === 0) { %>
+      <div class="activity-empty">
+        <p>No activity today</p>
+      </div>
+    <% } else { %>
+      <ul class="activity-list">
+        <% activity.forEach(function(item) { %>
+          <li class="activity-item">
+            <span class="activity-icon">
+              <% if (item.type === 'order') { %>
+                🧾
+              <% } else if (item.type === 'product') { %>
+                📦
+              <% } else if (item.type === 'user') { %>
+                👤
+              <% } %>
+            </span>
+            <span class="activity-text">
+              <%= item.label %> · <%= item.time %>
+            </span>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </div>
+</div>
+

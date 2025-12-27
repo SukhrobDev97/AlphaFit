@@ -1,0 +1,21 @@
+<div class="alerts-section">
+  <h2 class="section-title">System Alerts</h2>
+  
+  <div class="alerts-card">
+    <% if (!alerts || alerts.length === 0) { %>
+      <div class="alerts-empty">
+        <p>All systems operational</p>
+      </div>
+    <% } else { %>
+      <ul class="alerts-list">
+        <% alerts.forEach(function(alert) { %>
+          <li class="alert-item" onclick="window.location.href='<%= alert.redirectTo %>'">
+            <span class="alert-icon">⚠️</span>
+            <span class="alert-text"><%= alert.message %></span>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </div>
+</div>
+

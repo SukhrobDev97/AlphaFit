@@ -1,66 +1,71 @@
-body {
-  background: linear-gradient(135deg, #2b0a0a, #b12525);
+/* Dashboard Page Styles */
 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    color: #fff;
-  }
-  
-  .dashboard-container {
-    padding: 40px 20px;
-  }
-  
-  .navigation-menu {
-    margin-bottom: 30px;
-  }
-  
-  .navigation-menu .nav-link {
-    color: #fff !important;
-    font-weight: 500;
-    transition: 0.3s;
-  }
-  
-  .navigation-menu .nav-link:hover {
-    color: #ffcc00 !important;
-  }
-  
-  .card {
-    border-radius: 15px;
-    overflow: hidden;
-  }
-  
-  .card-header {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  
-  h2 {
-    color: #efefee;
-    font-size: 40px;
-    font-family: monospace;
+/* Page Header */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Chart Card */
+.chart-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.chart-card-header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.chart-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.chart-card-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+.chart-card-body {
+  padding: 24px;
+}
+
+#salesChart {
+  max-height: 400px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 28px;
   }
 
-  .back-home-btn {
-    display: inline-block;
-    background:  #E63946;
-    color: #fff;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 12px 28px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  .chart-card-header {
+    padding: 20px 20px 14px 20px;
   }
-  
-  .back-home-btn:hover {
-    background:  #E63946;
-    color: #c8b12e;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  }
-  
 
-  
-  
+  .chart-card-body {
+    padding: 20px;
+  }
+}

@@ -112,11 +112,23 @@ class ProductService {
 
     public async updateChosenProduct(id: string, input:ProductUpdateInput):Promise<Product>{
         id = shapeIntoMongooseObjectId(id);
+        // Use $set to ensure timestamps are updated correctly
+        const updateData = { $set: input };
         const result = await this.productModel
-        .findOneAndUpdate({_id:id}, input, {new:true})
+        .findOneAndUpdate({_id:id}, updateData, {new: true, runValidators: true})
         .exec();
         if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED)
-          return result
+        
+        console.log('Product updated:', {
+            id: result._id,
+            name: result.productName,
+            status: result.productStatus,
+            createdAt: result.createdAt,
+            updatedAt: result.updatedAt,
+            updatedAtISO: new Date(result.updatedAt).toISOString()
+        });
+        
+        return result
       }
 }
 

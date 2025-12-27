@@ -1,14 +1,31 @@
 console.log("Users frontend javascript file");
 
 $(function () {
+    // Initialize status classes on page load
+    $('.member-status').each(function() {
+        const status = $(this).val().toLowerCase();
+        $(this).removeClass('status-active status-block status-delete');
+        $(this).addClass('status-' + status);
+    });
+
+    // Store original values on page load
+    $('.member-status').each(function() {
+        $(this).data('original-value', $(this).val());
+    });
+
     $(".member-status").on("change", function (e) {
       const _id = e.target.id;
-      console.log("id: ", _id);
+      const $select = $(this);
+      const memberStatus = $select.val();
+      const originalValue = $select.data('original-value');
+      
+      // Show loading state
+      $select.addClass('loading');
+      
+      // Update visual status immediately
+      $select.removeClass('status-active status-block status-delete');
+      $select.addClass('status-' + memberStatus.toLowerCase());
   
-      const memberStatus = $(`#${_id}.member-status`).val();
-      console.log("memberStatus: ", memberStatus);
-  
-      // TODO: Axios updateChosenUser
       axios
         .post("/admin/user/edit", {
           _id,
@@ -21,12 +38,30 @@ $(function () {
   
           if (result.data) {
             console.log("User updated!");
-            $(".member-status").blur();
-          } else alert("User update failed!");
+            $select.removeClass('loading');
+            $select.blur();
+            $select.data('original-value', memberStatus);
+            
+            // Show subtle success feedback
+            $select.css('border-color', '#10b981');
+            setTimeout(() => {
+              $select.css('border-color', '');
+            }, 1000);
+          } else {
+            alert("User update failed!");
+            // Revert to original value
+            $select.val(originalValue);
+            $select.removeClass('loading status-active status-block status-delete');
+            $select.addClass('status-' + originalValue.toLowerCase());
+          }
         })
         .catch((err) => {
           console.log(err);
           alert("User update failed!");
+          // Revert to original value
+          $select.val(originalValue);
+          $select.removeClass('loading status-active status-block status-delete');
+          $select.addClass('status-' + originalValue.toLowerCase());
         });
     });
   });

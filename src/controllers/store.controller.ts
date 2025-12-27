@@ -14,14 +14,44 @@ const memberService = new MemberService()
 const dashboardService = new DashboardService(); // 👈 instance yaratish kerak
 
 const storeController: T = {};
-storeController.goHome = (req: Request, res: Response) => {
+storeController.goHome = async (req: Request, res: Response) => {
     try {
         console.log("goHome")
-        res.render('Home')
+        
+        // Always initialize activity and alerts arrays
+        let activity: any[] = [];
+        let alerts: any[] = [];
+        
+        // If user is authenticated, fetch activity and alerts data
+        const sessionInstance = req.session as T;
+        if (sessionInstance?.member?.memberType === MemberType.STORE) {
+            try {
+                activity = await dashboardService.getTodayActivity() || [];
+                alerts = await dashboardService.getSystemAlerts() || [];
+                
+                // Debug logging
+                console.log('ACTIVITY:', JSON.stringify(activity, null, 2));
+                console.log('ALERTS:', JSON.stringify(alerts, null, 2));
+                console.log('Activity length:', activity.length);
+                console.log('Alerts length:', alerts.length);
+            } catch (serviceError) {
+                console.error('Error fetching activity/alerts:', serviceError);
+                // Keep empty arrays if service fails
+            }
+        }
+        
+        res.render('Home', {
+            activity: activity,
+            alerts: alerts
+        });
     }
     catch (err) {
         console.log('Error, gohome', err)
-        res.redirect("/admin")
+        // Even on error, render with empty arrays
+        res.render('Home', {
+            activity: [],
+            alerts: []
+        });
     }
 };
 
@@ -133,6 +163,20 @@ storeController.processLogin = async (req: AdminRequest, res: Response) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
+  }
+};
+
+storeController.getTodayStats = async (req: Request, res: Response) => {
+  try {
+    const stats = await dashboardService.getTodayStats();
+    res.status(200).json(stats);
+  } catch (err) {
+    console.error('Error, getTodayStats:', err);
+    console.error('Error details:', JSON.stringify(err, null, 2));
+    res.status(500).json({ 
+      error: 'Failed to fetch stats',
+      message: err instanceof Error ? err.message : 'Unknown error'
+    });
   }
 };
 

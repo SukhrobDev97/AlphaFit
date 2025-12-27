@@ -14,14 +14,30 @@ $(function () {
       }
     });
 
-    $("#process-btn").on('click', () => {
-        $(".dish-container").slideToggle(500)
-        $("#process-btn").css('display', 'none')
+    // Slide-over panel controls
+    $("#new-product-btn").on('click', () => {
+        $("#slide-over-panel").addClass('active');
+        $("#slide-over-backdrop").addClass('active');
+        $('body').css('overflow', 'hidden');
     });
 
-    $("#cancel-btn").on('click', () => {
-        $(".dish-container").slideToggle(100)
-        $("#process-btn").css('display', 'flex')
+    $("#panel-close, #slide-over-backdrop, #cancel-form-btn").on('click', () => {
+        $("#slide-over-panel").removeClass('active');
+        $("#slide-over-backdrop").removeClass('active');
+        $('body').css('overflow', '');
+    });
+
+    // Update status select classes on change
+    $('.new-product-status').on('change', function() {
+        $(this).removeClass('status-process status-pause status-delete');
+        const status = $(this).val().toLowerCase();
+        $(this).addClass('status-' + status);
+    });
+
+    // Initialize status classes on page load
+    $('.new-product-status').each(function() {
+        const status = $(this).val().toLowerCase();
+        $(this).addClass('status-' + status);
     });
 
     $('.new-product-status').on("change", async function (e){
@@ -62,13 +78,12 @@ function validateForm() {
         productStatus === '' ||
         productPrice === '' ||
         productLeftCount === '' ||
-        productCollection === '' ||
-        productDesc === '' 
-        
+        productCollection === ''
     ) {
-        alert('Plese insert all required details');
+        alert('Please insert all required details');
         return false;
-    }else return true
+    }
+    return true;
 }
 
 function prewievFileHandler(input, order){

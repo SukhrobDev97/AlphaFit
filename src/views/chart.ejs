@@ -1,46 +1,66 @@
 <%- include('includes/header') %>
 
+<link rel="stylesheet" type="text/css" href="/css/home.css" />
+<link rel="stylesheet" type="text/css" href="/css/chart.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/chart.css" />
-
-<body class="bg-light">
-
-  <div class="container py-5">
-    <div class="row mb-4">
-      <div class="col text-center">
-        <h2 class="fw-bold"><%= title %></h2>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-logo">Alpha<span class="logo-accent">Fit</span></h2>
       </div>
-    </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="/admin/product/all" class="nav-item">
+          <span class="nav-label">Products</span>
+        </a>
+        <a href="/admin/user/all" class="nav-item">
+          <span class="nav-label">Users</span>
+        </a>
+        <a href="/admin/dashboard" class="nav-item active">
+          <span class="nav-label">Dashboard</span>
+          <span class="nav-indicator"></span>
+        </a>
+        <a href="/admin/logout" class="nav-item" onclick="return confirm('Do you want to logout?')">
+          <span class="nav-label">Logout</span>
+        </a>
+      </nav>
+    </aside>
 
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <div class="card shadow">
-          <div class="card-header bg-primary text-white">
-            📊 Monthly statistics
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">Sales and performance overview</p>
+        </div>
+
+        <!-- Chart Card -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">Monthly Statistics</h3>
+            <p class="chart-card-subtitle">Daily Profit (USD)</p>
           </div>
-          <div class="card-body">
-            <canvas id="salesChart" height="120"></canvas>
+          <div class="chart-card-body">
+            <canvas id="salesChart"></canvas>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container text-center mt-4">
-        <a class="btn back-home-btn" href="/admin">Back to Home</a>
-          
-        </a>
-      </div>
-      
+    </main>
   </div>
 
-  <!-- Backenddan kelayotgan data -->
+  <!-- Backend data -->
   <script>
     window.salesData = <%- JSON.stringify(sales || []) %>;
   </script>
   <script src="/js/chart.js"></script>
-
 </body>
 
 <%- include('includes/footer') %>
+

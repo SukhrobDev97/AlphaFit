@@ -1,0 +1,5 @@
+PORT=3004
+RECAPTCHA_SECRET_KEY=6LcqicgrAAAAAD8HVWJXIiqhr645Ps5x_fr472-s
+MONGO_URL=mongodb+srv://sukhrobdev97:m1seIZnxmJ3IPhFN@burgerhub.j6cdteq.mongodb.net/BurgerHub?retryWrites=true&w=majority&appName=BurgerHub
+SECRET_TOKEN = ewkbjr21432bjnemdu234454
+SESSION_SECRET = djksadfjhdnsghnsdmvnjfjwrfner

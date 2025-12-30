@@ -10,6 +10,9 @@ import session from 'express-session';
 import ConnectMongoDb from "connect-mongodb-session";
 import { T } from './libs/types/common';
 import cookieParser from 'cookie-parser';
+import { Server as SocketIOServer } from 'socket.io';
+import http from 'http';
+
 
 const MongoDBStore = ConnectMongoDb(session);
 const store = new MongoDBStore({
@@ -63,4 +66,25 @@ app.set("view engine", "ejs")
 app.use('/admin', routerAdmin); //BSSR,EJS
 app.use('/', router)           // react
 
-export default app;
+// 5- socket.io
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+    cors:{
+        origin: true,
+        credentials: true
+    }
+});
+
+let summaryClients = 0;
+io.on('connection', (socket) => {
+    summaryClients++;
+    console.log(`Connection and total:[ ${summaryClients}]`);
+
+    socket.on('disconnect', () => {
+        summaryClients--;
+        console.log(`Disconnection and total:[ ${summaryClients}]`);
+    });
+});
+
+
+export default server;

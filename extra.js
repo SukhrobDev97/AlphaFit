@@ -1,3 +1,4 @@
+console.log('EXTRA.JS IS RUNNING');
 const fs = require('fs-extra');
 
 const directoriesToCopy = [

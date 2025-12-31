@@ -9,7 +9,6 @@ class AuthService{
     private readonly secretToken
     constructor(){
         this.secretToken = process.env.SECRET_TOKEN as string
-        console.log("SECRET_TOKEN =>", this.secretToken);
     }
     public async createToken(payload: Member) {
         return new Promise((resolve, reject) => {

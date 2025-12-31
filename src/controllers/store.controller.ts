@@ -48,7 +48,7 @@ storeController.goHome = async (req: Request, res: Response) => {
     catch (err) {
         console.log('Error, gohome', err)
         // Even on error, render with empty arrays
-        res.render('Home', {
+        res.render('home', {
             activity: [],
             alerts: []
         });

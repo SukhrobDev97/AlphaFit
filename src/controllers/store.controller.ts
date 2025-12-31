@@ -40,7 +40,7 @@ storeController.goHome = async (req: Request, res: Response) => {
             }
         }
         
-        res.render('Home', {
+        res.render('home', {
             activity: activity,
             alerts: alerts
         });
